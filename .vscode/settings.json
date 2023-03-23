@@ -1,0 +1,9 @@
+{
+    "terraform.experimentalFeatures.validateOnSave": true,
+    "terraform.experimentalFeatures.prefillRequiredFields": true,
+    "[terraform]": {
+        "editor.formatOnSave": true,
+        "editor.autoIndent": "full"
+        
+    }
+}
