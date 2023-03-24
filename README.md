@@ -19,6 +19,17 @@ You may want to at least:
   - Run the docker image locally and generate a new libp2p identity (`yarn identity create && base64 -w0 .hub/default_id.protobuf`)
   - Upload the base64 value as a new secret value revision
 - Set the value for the ethRpcUrl kubernetes secret
+- Update the docker repository in [docker-bake.hcl](docker-bake.hcl) used in pushing new build images
+
+## Architecture Overview
+
+- All GCP and Kubernetes resources defined and managed by Terraform
+- Persistent disk mounted to the local rocksdb directory
+- Static IP and corresponding DNS record provisioned
+- Small, dedicated GKE cluster is provisioned within its own dedicated VPC
+- Kubernetes LoadBalancer service is provisioned along with corresponding firewall rules for inbound RPC and libp2p traffic
+- A GCP Artifact Registry instance (private to the GCP project) is used for the hubble Docker image
+- Kubernetes Secrets are deployed to manage the Alchemy/Infura/etc node RPC URL and the libp2p peer identity used by the hub
 
 ## Update Instructions
 
