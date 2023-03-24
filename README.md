@@ -38,5 +38,5 @@ Simple changes to the config of the hub can be propagated as follows:
 1. Make any changes to the farcaster hub container in [docker](./docker/)
 1. Run `docker buildx bake --push` from the repository root
 1. Fetch the sha256 of the new image (from logs or from [GCP](https://console.cloud.google.com/artifacts/docker/sc-farcaster/us-west1/docker/farcaster-hubble?project=sc-farcaster))
-1. Write the new image sha256 value to [kubernetes.tf](./terraform/gke_docker_image.tf) -> `image_tag`
+1. Write the new image sha256 value to [kubernetes](./terraform/gke_docker_image.tf) -> `image_tag`
 1. Commit and push to the git remote, which will automatically trigger a terraform deployment at https://app.terraform.io/
