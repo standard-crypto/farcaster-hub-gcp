@@ -1,5 +1,6 @@
 locals {
-  app-name = "${var.name}-app"
+  app-name              = "${var.name}-app"
+  farcaster-hub-network = 2 # testnet
 }
 
 resource "kubernetes_deployment" "farcaster" {
@@ -51,6 +52,10 @@ resource "kubernetes_deployment" "farcaster" {
           env {
             name  = "HUB_IP"
             value = google_compute_address.farcaster-hub-ip.address
+          }
+          env {
+            name  = "HUB_NETWORK"
+            value = local.farcaster-hub-network
           }
           env {
             name = "ETH_RPC_URL"

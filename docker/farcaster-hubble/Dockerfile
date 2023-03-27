@@ -29,4 +29,5 @@ CMD yarn start \
     --config=/hub_config.ts \
     --eth-rpc-url="$ETH_RPC_URL" \
     --announce-server-name="$HUB_HOSTNAME" \
-    --announce-ip="$HUB_IP"
+    --announce-ip="$HUB_IP" \
+    --network="$HUB_NETWORK"

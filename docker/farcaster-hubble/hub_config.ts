@@ -9,7 +9,6 @@ export const Config = {
     /** The RPC port to use. */
     rpcPort: DEFAULT_RPC_PORT,
     dbName: 'farcaster',
-    network: NETWORK_DEVNET,
     bootstrap: [
         "/dns/testnet1.farcaster.xyz/tcp/2282"
     ],
