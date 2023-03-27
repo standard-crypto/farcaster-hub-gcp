@@ -11,7 +11,7 @@ export const Config = {
     dbName: 'farcaster',
     network: NETWORK_DEVNET,
     bootstrap: [
-        "/dns/fc-hub-lb-d851784af205ccae.elb.us-east-1.amazonaws.com/tcp/9090"
+        "/dns/testnet1.farcaster.xyz/tcp/2282"
     ],
     adminServerEnabled: false,
 };
