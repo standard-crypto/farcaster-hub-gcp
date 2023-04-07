@@ -1,6 +1,5 @@
 locals {
-  app-name              = "${var.name}-app"
-  farcaster-hub-network = 2 # testnet
+  app-name = "${var.name}-app"
 }
 
 resource "kubernetes_deployment" "farcaster" {
@@ -55,7 +54,7 @@ resource "kubernetes_deployment" "farcaster" {
           }
           env {
             name  = "HUB_NETWORK"
-            value = local.farcaster-hub-network
+            value = var.hubble-network
           }
           env {
             name = "ETH_RPC_URL"

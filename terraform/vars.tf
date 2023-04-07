@@ -25,3 +25,9 @@ variable "hubble-name" {
   type    = string
   default = "Standard Crypto"
 }
+
+// ID of the network the hub will run on
+variable "hubble-network" {
+  type    = number
+  default = 1 # mainnet
+}
