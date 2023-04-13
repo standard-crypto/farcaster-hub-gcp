@@ -1,4 +1,4 @@
 locals {
-  image_tag = "sha256:b27082366fc2fcb1a9c928213ec9ccb51a3aef579dcff6e41d1b4b451c43b73e"
+  image_tag = "sha256:3a5d2df7aa159ec6e957c92cefaad3caa16f74106c6739df0afe3567342a4b7e"
   image     = "${var.region}-docker.pkg.dev/${var.project-id}/${google_artifact_registry_repository.artifact-registry.repository_id}/farcaster-hubble@${local.image_tag}"
 }
