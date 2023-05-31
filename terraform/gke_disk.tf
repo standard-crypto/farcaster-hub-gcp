@@ -1,16 +1,7 @@
-resource "kubernetes_storage_class" "farcaster" {
-  metadata {
-    name = var.name
-  }
-  storage_provisioner    = "kubernetes.io/gce-pd"
-  volume_binding_mode    = "Immediate"
-  allow_volume_expansion = true
-  reclaim_policy         = "Retain"
-  parameters = {
-    "type"             = "pd-standard"
-    "fstype"           = "ext4"
-    "replication-type" = "none"
-  }
+resource "google_compute_disk" "farcaster" {
+  name = "farcaster-data"
+  type = "pd-standard"
+  zone = "us-west1b"
 }
 
 resource "kubernetes_persistent_volume_claim" "farcaster" {
@@ -18,31 +9,30 @@ resource "kubernetes_persistent_volume_claim" "farcaster" {
     name = var.name
   }
   spec {
-    storage_class_name = kubernetes_storage_class.farcaster.metadata[0].name
-    access_modes       = ["ReadWriteOnce"]
+    access_modes = ["ReadWriteOnce"]
     resources {
       requests = {
-        storage : "50Gi"
+        storage = "50Gi"
       }
     }
+    volume_name = kubernetes_persistent_volume.farcaster.metadata.0.name
   }
 }
 
-resource "google_compute_disk" "farcaster" {
-  name = "pvc-964b6cad-6a12-49f6-a865-96f46c343a67"
-  description = jsonencode(
-    {
-      "kubernetes.io/created-for/pv/name"       = "pvc-964b6cad-6a12-49f6-a865-96f46c343a67"
-      "kubernetes.io/created-for/pvc/name"      = "farcaster-hub"
-      "kubernetes.io/created-for/pvc/namespace" = "default"
-      "storage.gke.io/created-by"               = "pd.csi.storage.gke.io"
+resource "kubernetes_persistent_volume" "farcaster" {
+  metadata {
+    name = var.name
+  }
+  spec {
+    capacity = {
+      storage = "50Gi"
     }
-  )
-  labels = {
-    "goog-gke-volume"           = ""
-    "goog-k8s-cluster-location" = "us-west1"
-    "goog-k8s-cluster-name"     = "farcaster-hub-cluster"
-    "goog-k8s-node-pool-name"   = "farcaster-hub-node-pool"
+    access_modes = ["ReadWriteOnce"]
+    persistent_volume_source {
+      gce_persistent_disk {
+        pd_name = google_compute_disk.farcaster.name
+      }
+    }
   }
 }
 
