@@ -40,20 +40,3 @@ Simple changes to the config of the hub can be propagated as follows:
 1. Fetch the sha256 of the new image (from logs or from [GCP](https://console.cloud.google.com/artifacts/docker/sc-farcaster/us-west1/docker/farcaster-hubble?project=sc-farcaster))
 1. Write the new image sha256 value to [kubernetes](./terraform/gke_docker_image.tf) -> `image_tag`
 1. Commit and push to the git remote, which will automatically trigger a terraform deployment at https://app.terraform.io/
-
-
-## Volume Snapshot Configuration
-
-The data disk is managed by a persistant volume claim. In order to configure volume snapshots of the disk in Google Cloud, the disk must be imported to the terraform state and referenced with a resource. 
-
-**Note: the resource `google_compute_disk.farcaster` should never be replaced or updated in a terraform apply because it is managed by kubernetes**
-
-### Importing The Disk to Terraform state
-1. Update the `google_compute_disk` block in `gke_disk.tf` to the following:
-  ```
-  resource "google_compute_disk" "farcaster" {
-    name = "unknown"
-  }
-  ```
-2. Run the terraform import command: `terraform import google_compute_disk.farcaster <disk-name>`
-3. Update the `google_compute_disk` block with any parameters that force replacement or updates to the resource. You can run `terraform plan` to check this.
