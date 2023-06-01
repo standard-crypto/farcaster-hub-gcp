@@ -20,8 +20,6 @@ RUN git clone https://github.com/farcasterxyz/hubble.git && \
 WORKDIR /hubble
 RUN yarn run build
 
-COPY hub_config.ts peer_id.protobuf /
-
 # Change to the Hubble app directory and create the network identity
 WORKDIR /hubble/apps/hubble
 
@@ -30,4 +28,9 @@ CMD yarn start \
     --eth-rpc-url="$ETH_RPC_URL" \
     --announce-server-name="$HUB_HOSTNAME" \
     --announce-ip="$HUB_IP" \
-    --network="$HUB_NETWORK"
+    --network="$HUB_NETWORK" \
+    --gossip-port=2282 \
+    --rpc-port=2283 \
+    --ip="0.0.0.0" \
+    --db-name="farcaster" \
+    --admin-server-enabled=false
