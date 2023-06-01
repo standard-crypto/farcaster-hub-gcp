@@ -2,6 +2,12 @@ resource "google_compute_disk" "farcaster" {
   name = "farcaster-data"
   type = "pd-standard"
   zone = var.zone
+  labels = {
+    "goog-gke-volume"           = ""
+    "goog-k8s-cluster-location" = "us-west1"
+    "goog-k8s-cluster-name"     = "farcaster-hub-cluster"
+    "goog-k8s-node-pool-name"   = "farcaster-hub-node-pool"
+  }
 }
 
 resource "kubernetes_storage_class" "farcaster" {
