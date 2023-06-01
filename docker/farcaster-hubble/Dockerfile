@@ -32,5 +32,4 @@ CMD yarn start \
     --gossip-port=2282 \
     --rpc-port=2283 \
     --ip="0.0.0.0" \
-    --db-name="farcaster" \
-    --admin-server-enabled=false
+    --db-name="farcaster"
