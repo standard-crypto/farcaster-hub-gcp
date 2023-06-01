@@ -1,7 +1,7 @@
 resource "google_compute_disk" "farcaster" {
   name = "farcaster-data"
   type = "pd-standard"
-  zone = var.zone
+  zone = "us-west1-b"
 }
 
 resource "kubernetes_persistent_volume_claim" "farcaster" {
@@ -38,7 +38,7 @@ resource "kubernetes_persistent_volume" "farcaster" {
 
 resource "google_compute_resource_policy" "farcaster-snapshot-policy" {
   name   = "farcaster-snapshot-policy"
-  region = var.region
+  region = "us-west1"
   snapshot_schedule_policy {
     schedule {
       weekly_schedule {
