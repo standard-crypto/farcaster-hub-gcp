@@ -57,10 +57,19 @@ resource "kubernetes_deployment" "farcaster" {
             value = var.hubble-network
           }
           env {
-            name = "ETH_RPC_URL"
+            name = "ETH_GOERLI_RPC_URL"
             value_from {
               secret_key_ref {
                 name = kubernetes_secret.eth-rpc-url.metadata[0].name
+                key  = "url"
+              }
+            }
+          }
+          env {
+            name = "ETH_MAINNET_RPC_URL"
+            value_from {
+              secret_key_ref {
+                name = kubernetes_secret.eth-mainnet-rpc-url.metadata[0].name
                 key  = "url"
               }
             }
