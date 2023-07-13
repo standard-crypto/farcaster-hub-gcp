@@ -1,7 +1,7 @@
 FROM python:alpine
 
 # https://github.com/farcasterxyz/hubble/tags
-ARG HUBBLE_VERSION="@farcaster/hubble@1.3.3"
+ARG HUBBLE_VERSION="@farcaster/hubble@1.4.0"
 
 # Install required dependencies
 RUN apk update && \
