@@ -24,7 +24,8 @@ RUN yarn run build
 WORKDIR /hubble/apps/hubble
 
 CMD yarn start \
-    --eth-rpc-url="$ETH_RPC_URL" \
+    --eth-rpc-url="$ETH_GOERLI_RPC_URL" \
+    --eth-mainnet-rpc-url="$ETH_MAINNET_RPC_URL" \
     --announce-server-name="$HUB_HOSTNAME" \
     --announce-ip="$HUB_IP" \
     --network="$HUB_NETWORK" \
