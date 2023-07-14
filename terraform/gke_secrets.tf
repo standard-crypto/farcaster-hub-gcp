@@ -36,3 +36,16 @@ resource "kubernetes_secret" "peer-id-b64" {
     ignore_changes = all
   }
 }
+
+resource "kubernetes_secret" "grafana-api-key" {
+  metadata {
+    name = "grafana-api-key"
+  }
+  data = {
+    "url" = "PLACEHOLDER"
+  }
+  lifecycle {
+    // Do not overwrite with the PLACEHOLDER value
+    ignore_changes = all
+  }
+}
