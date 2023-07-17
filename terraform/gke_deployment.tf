@@ -57,6 +57,10 @@ resource "kubernetes_deployment" "farcaster" {
             value = var.hubble-network
           }
           env {
+            name  = "BOOTSTRAP_NODE"
+            value = "/dns/nemes.farcaster.xyz/tcp/2282"
+          }
+          env {
             name = "ETH_GOERLI_RPC_URL"
             value_from {
               secret_key_ref {
