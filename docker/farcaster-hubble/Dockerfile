@@ -1,4 +1,4 @@
-FROM node:20.2-alpine AS build
+FROM node:20.2-alpine
 
 # https://github.com/farcasterxyz/hubble/tags
 ARG HUBBLE_VERSION="@farcaster/hubble@1.4.5"
