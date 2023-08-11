@@ -1,14 +1,21 @@
-FROM python:alpine
+FROM node:20.2-alpine AS build
 
 # https://github.com/farcasterxyz/hubble/tags
-ARG HUBBLE_VERSION="@farcaster/hubble@1.4.3"
+ARG HUBBLE_VERSION="@farcaster/hubble@1.4.5"
 
 # Install required dependencies
-RUN apk update && \
-    apk add --no-cache git && \
-    apk add --no-cache yarn && \
-    apk add --no-cache libc6-compat && \
-    apk add --no-cache flatbuffers
+RUN apk add --no-cache libc6-compat python3 make g++ linux-headers curl git
+
+USER node
+RUN mkdir /home/node/app
+WORKDIR /home/node/app
+
+# Install Rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.70.0
+ENV PATH="/home/node/.cargo/bin:${PATH}"
+
+# Rust flags to allow building with musl, which is needed for alpine
+ENV RUSTFLAGS="-C target-feature=-crt-static"
 
 # Clone the Hubble repository and install dependencies
 RUN git clone https://github.com/farcasterxyz/hubble.git && \
@@ -17,11 +24,11 @@ RUN git clone https://github.com/farcasterxyz/hubble.git && \
     yarn install
 
 # Build the Hubble app
-WORKDIR /hubble
+WORKDIR /home/node/app/hubble/
 RUN yarn run build
 
 # Change to the Hubble app directory and create the network identity
-WORKDIR /hubble/apps/hubble
+WORKDIR /home/node/app/hubble/apps/hubble
 
 CMD yarn start \
     --eth-rpc-url="$ETH_GOERLI_RPC_URL" \
