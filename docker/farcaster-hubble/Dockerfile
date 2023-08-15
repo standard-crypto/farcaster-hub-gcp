@@ -1,7 +1,7 @@
 FROM node:20.2-alpine
 
 # https://github.com/farcasterxyz/hubble/tags
-ARG HUBBLE_VERSION="@farcaster/hubble@1.4.5"
+ARG HUBBLE_VERSION="@farcaster/hubble@1.4.6"
 
 # Install required dependencies
 RUN apk add --no-cache libc6-compat python3 make g++ linux-headers curl git
