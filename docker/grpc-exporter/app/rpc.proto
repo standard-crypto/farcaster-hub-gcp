@@ -1,4 +1,5 @@
 syntax = "proto3";
+// models taken from https://github.com/farcasterxyz/hub-monorepo/blob/main/protobufs/schemas/request_response.proto
 
 message HubInfoRequest {
   bool db_stats = 1;

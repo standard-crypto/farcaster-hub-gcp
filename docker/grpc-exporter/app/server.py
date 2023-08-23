@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import subprocess
 import json
@@ -15,11 +16,10 @@ class AppMetrics:
         self.polling_interval_seconds = polling_interval_seconds
 
         # Prometheus metrics to collect
-        self.ourMessages = Gauge("our_message_height", "Our Messages", ['peerId'])
-        self.theirMessages = Gauge("their_message_height", "Their Messages", ['peerId'])
-        self.divergenceSecondsAgo = Gauge("divergence_seconds_ago", "Divergence Seconds Ago", ['peerId'])
-        self.lastBadSync = Gauge("last_bad_sync", "Last Bad Sync", ['peerId'])
-
+        self.ourMessagesMin = Gauge("our_message_height_min", "Our Messages Minimum")
+        self.ourMessagesMax = Gauge("our_message_height_max", "Our Messages Maximum")
+        self.theirMessagesMin = Gauge("their_message_height_min", "Their Messages Minimum")
+        self.theirMessagesMax = Gauge("their_message_height_max", "Their Messages Maximum")
 
     def run_metrics_loop(self):
         """Metrics fetching loop"""
@@ -42,12 +42,21 @@ class AppMetrics:
         result = subprocess.run(["./scripts/sync_state.sh"], stdout=subprocess.PIPE)
         result.check_returncode()
         resp = json.loads(result.stdout)
-        for state in resp["syncStatus"]:
-            self.ourMessages.labels(peerId=state["peerId"]).set(int(state["ourMessages"]))
-            self.theirMessages.labels(peerId=state["peerId"]).set(int(state["theirMessages"]))
-            self.divergenceSecondsAgo.labels(peerId=state["peerId"]).set(int(state["divergenceSecondsAgo"]))
-            self.lastBadSync.labels(peerId=state["peerId"]).set(int(state["lastBadSync"]))
+        ourMessagesMin = sys.maxsize
+        theirMessagesMin = sys.maxsize
+        ourMessagesMax = 0
+        theirMessagesMax = 0
 
+        for state in resp["syncStatus"]:
+            ourMessagesMin = min(ourMessagesMin, int(state["ourMessages"]))
+            ourMessagesMax = max(ourMessagesMax, int(state["ourMessages"]))
+            theirMessagesMin = min(theirMessagesMin, int(state["theirMessages"]))
+            theirMessagesMax = max(theirMessagesMax, int(state["theirMessages"]))
+
+        self.ourMessagesMin.set(ourMessagesMin)
+        self.theirMessagesMin.set(ourMessagesMax)
+        self.ourMessagesMax.set(ourMessagesMax)
+        self.theirMessagesMax.set(theirMessagesMax)
         print("Exported sync state...")
 
 
