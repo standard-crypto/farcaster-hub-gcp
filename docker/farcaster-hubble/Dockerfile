@@ -1,7 +1,7 @@
 FROM node:20.2-alpine
 
 # https://github.com/farcasterxyz/hubble/tags
-ARG HUBBLE_VERSION="@farcaster/hubble@1.4.6"
+ARG HUBBLE_VERSION="@farcaster/hubble@1.5.0"
 
 # Install required dependencies
 RUN apk add --no-cache libc6-compat python3 make g++ linux-headers curl git
@@ -33,6 +33,7 @@ WORKDIR /home/node/app/hubble/apps/hubble
 CMD yarn start \
     --eth-rpc-url="$ETH_GOERLI_RPC_URL" \
     --eth-mainnet-rpc-url="$ETH_MAINNET_RPC_URL" \
+    --l2-rpc-url="https://opt-mainnet.g.alchemy.com/v2/3xWX-cWV-an3IPXmVCRXX51PpQzc-8iJ" \
     --announce-server-name="$HUB_HOSTNAME" \
     --announce-ip="$HUB_IP" \
     --network="$HUB_NETWORK" \
