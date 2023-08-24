@@ -78,6 +78,10 @@ resource "kubernetes_deployment" "prometheus" {
               }
             }
           }
+          env {
+            name  = "GRPC_EXPORTER_TARGET"
+            value = "${kubernetes_service.grpc-exporter.metadata[0].name}:9090"
+          }
         }
       }
     }
