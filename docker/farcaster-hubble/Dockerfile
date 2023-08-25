@@ -33,7 +33,7 @@ WORKDIR /home/node/app/hubble/apps/hubble
 CMD yarn start \
     --eth-rpc-url="$ETH_GOERLI_RPC_URL" \
     --eth-mainnet-rpc-url="$ETH_MAINNET_RPC_URL" \
-    --l2-rpc-url="https://opt-mainnet.g.alchemy.com/v2/3xWX-cWV-an3IPXmVCRXX51PpQzc-8iJ" \
+    --l2-rpc-url="$OPTIMISM_L2_RPC_URL" \
     --announce-server-name="$HUB_HOSTNAME" \
     --announce-ip="$HUB_IP" \
     --network="$HUB_NETWORK" \
