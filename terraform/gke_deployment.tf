@@ -79,6 +79,15 @@ resource "kubernetes_deployment" "farcaster" {
             }
           }
           env {
+            name = "OPTIMISM_L2_RPC_URL"
+            value_from {
+              secret_key_ref {
+                name = kubernetes_secret.optimism-l2-rpc-url.metadata[0].name
+                key  = "url"
+              }
+            }
+          }
+          env {
             name = "IDENTITY_B64"
             value_from {
               secret_key_ref {
