@@ -23,9 +23,13 @@ resource "kubernetes_deployment" "farcaster" {
         }
       }
       spec {
+        security_context {
+          fs_group = "1000" # user 'node'
+        }
         container {
-          image = local.image
-          name  = "${var.name}-image"
+          image   = local.image
+          name    = "${var.name}-image"
+          command = ["sleep", "50000"]
           volume_mount {
             name       = var.name
             mount_path = "/home/node/app/hubble/apps/hubble/.rocks"
