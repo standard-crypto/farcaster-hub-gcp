@@ -24,6 +24,7 @@ resource "kubernetes_deployment" "farcaster" {
       }
       spec {
         security_context {
+          fs_group    = "1000" # user 'node'
           run_as_user = "1000"
         }
         container {
@@ -31,7 +32,7 @@ resource "kubernetes_deployment" "farcaster" {
           name  = "${var.name}-image"
           volume_mount {
             name       = var.name
-            mount_path = "/hubble/apps/hubble/.rocks"
+            mount_path = "/home/node/app/hubble/apps/hubble/.rocks"
           }
           port {
             name           = "hubble-gossip"

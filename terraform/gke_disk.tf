@@ -54,6 +54,7 @@ resource "kubernetes_persistent_volume" "farcaster" {
     persistent_volume_source {
       gce_persistent_disk {
         pd_name = google_compute_disk.farcaster.name
+        fs_type = "ext4"
       }
     }
   }
