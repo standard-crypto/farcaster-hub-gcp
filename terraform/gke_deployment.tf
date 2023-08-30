@@ -24,7 +24,8 @@ resource "kubernetes_deployment" "farcaster" {
       }
       spec {
         security_context {
-          fs_group = "1000" # user 'node'
+          fs_group    = "1000" # user 'node'
+          run_as_user = "1000"
         }
         container {
           image   = local.image
