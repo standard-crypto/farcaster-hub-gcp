@@ -1,5 +1,5 @@
 locals {
-  image_tag            = "sha256:531c37ae9fac7f1ccdeef34d07238068c7731e6e8abb471b810ba320e9dac05c"
+  image_tag            = "sha256:57f08a7bdd73e754ae67c3b1ec189f94565acb1c89d454948983cb058ffd9cf8"
   image                = "${var.region}-docker.pkg.dev/${var.project-id}/${google_artifact_registry_repository.artifact-registry.repository_id}/farcaster-hubble@${local.image_tag}"
   prometheus-image_tag = "sha256:bffd8d08241fea683d3f0270fd6d4c9dd3d822e5c0042c58e6a2936c2393d300"
   prometheus-image     = "${var.region}-docker.pkg.dev/${var.project-id}/${google_artifact_registry_repository.artifact-registry.repository_id}/prometheus@${local.prometheus-image_tag}"

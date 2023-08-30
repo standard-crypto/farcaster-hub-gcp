@@ -23,6 +23,9 @@ resource "kubernetes_deployment" "farcaster" {
         }
       }
       spec {
+        security_context {
+          run_as_user = "1000"
+        }
         container {
           image = local.image
           name  = "${var.name}-image"
