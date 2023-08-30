@@ -28,9 +28,8 @@ resource "kubernetes_deployment" "farcaster" {
           run_as_user = "1000"
         }
         container {
-          image   = local.image
-          name    = "${var.name}-image"
-          command = ["sleep", "50000"]
+          image = local.image
+          name  = "${var.name}-image"
           volume_mount {
             name       = var.name
             mount_path = "/home/node/app/hubble/apps/hubble/.rocks"
