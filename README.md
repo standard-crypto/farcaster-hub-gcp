@@ -9,12 +9,14 @@ IAC used for managing the deployment of a Farcaster hub within a fresh GCP proje
 - Static IP and corresponding DNS record provisioned
 - Small, dedicated GKE cluster is provisioned within its own dedicated VPC
 - Kubernetes LoadBalancer service is provisioned along with corresponding firewall rules for inbound RPC and libp2p traffic
-- A GCP Artifact Registry instance (private to the GCP project) is used for the hubble Docker image
+- A GCP Artifact Registry instance (optional, and private to the GCP project) is used for the custom prometheus infrastructure
 - Kubernetes Secrets are deployed to manage the Alchemy/Infura/etc node RPC URL and the libp2p peer identity used by the hub
+- Custom prometheus metrics for monitoring a hub's sync status
+  - Note: Integration with the prometheus and grafana stack provided by the Farcaster team is in progress
 
 ## Copying This Deployment
 
-This configuration is written for a clean GCP project. 
+This configuration is written for a clean GCP project.
 
 Most things should work as-is for running in any GCP project.
 
@@ -28,15 +30,13 @@ You may want to at least:
 - Set the value for the hub libp2p peer ID kubernetes secret
   - Run the docker image locally and generate a new libp2p identity (`yarn identity create && base64 -w0 .hub/default_id.protobuf`)
   - Upload the base64 value as a new secret value revision
-- Set the value for the ethRpcUrl kubernetes secret
+- Set the values for the kubernetes secrets at [gke_secrets.tf](terraform/gke_secrets.tf)
 - Update the docker repository in [docker-bake.hcl](docker-bake.hcl) used in pushing new build images
 
 ## Update Instructions
 
 Simple changes to the config of the hub can be propagated as follows:
 
-1. Make any changes to the farcaster hub container in [docker](./docker/)
-1. Run `docker buildx bake --push` from the repository root
-1. Fetch the sha256 of the new image (from logs or from [GCP](https://console.cloud.google.com/artifacts/docker/sc-farcaster/us-west1/docker/farcaster-hubble?project=sc-farcaster))
-1. Write the new image sha256 value to [kubernetes](./terraform/gke_docker_image.tf) -> `image_tag`
-1. Commit and push to the git remote, which will automatically trigger a terraform deployment at https://app.terraform.io/
+1. Fetch the tag of the new hub docker image from https://github.com/farcasterxyz/hub-monorepo/releases
+2. Write the image tag to [kubernetes](terraform/gke_deployment.tf) -> `image = "farcasterxyz/hubble:[TAG]"`
+3. If using terraform cloud, commit and push to the git remote to trigger a deployment at https://app.terraform.io/

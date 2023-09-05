@@ -1,13 +1,8 @@
 group "default" {
     targets = [
-        "hubble",
+        "prometheus",
+        "grpc-exporter"
     ]
-}
-
-target "hubble" {
-    tags = ["us-west1-docker.pkg.dev/sc-farcaster/docker/farcaster-hubble", "us-west1-docker.pkg.dev/sc-farcaster/docker/farcaster-hubble:latest"]
-    platforms = ["linux/amd64"]
-    context = "./docker/farcaster-hubble"
 }
 
 target "prometheus" {
