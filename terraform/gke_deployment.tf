@@ -28,7 +28,7 @@ resource "kubernetes_deployment" "farcaster" {
           run_as_user = "1000"
         }
         container {
-          image = local.image
+          image = "farcasterxyz/hubble:1.5.1"
           name  = "${var.name}-image"
           volume_mount {
             name       = var.name
@@ -100,6 +100,8 @@ resource "kubernetes_deployment" "farcaster" {
               }
             }
           }
+          command = ["yarn", "start"]
+          args    = ["--eth-rpc-url", "$(ETH_GOERLI_RPC_URL)", "--eth-mainnet-rpc-url", "$(ETH_MAINNET_RPC_URL)", "--l2-rpc-url", "$(OPTIMISM_L2_RPC_URL)", "--announce-server-name", "$(HUB_HOSTNAME)", "--announce-ip", "$(HUB_IP)", "--network", "$(HUB_NETWORK)", "--gossip-port", "2282", "--rpc-port", "2283", "--ip", "0.0.0.0", "--db-name", "farcaster"]
         }
         volume {
           name = var.name
