@@ -32,7 +32,7 @@ resource "kubernetes_deployment" "farcaster" {
           name  = "${var.name}-image"
           volume_mount {
             name       = var.name
-            mount_path = "/home/node/app/hubble/apps/hubble/.rocks"
+            mount_path = "/home/node/app/apps/hubble/.rocks"
           }
           port {
             name           = "hubble-gossip"
