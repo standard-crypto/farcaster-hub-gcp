@@ -1,16 +1,14 @@
 terraform {
   required_providers {
     grafana = {
-      source  = "grafana/grafana"
-      version = "1.40.1"
+      source                = "grafana/grafana"
+      configuration_aliases = [grafana.cloud]
     }
     github = {
-      source  = "integrations/github"
-      version = "~> 5.0"
+      source = "integrations/github"
     }
   }
 }
-
 
 provider "grafana" {
   alias = "farcaster_stack"

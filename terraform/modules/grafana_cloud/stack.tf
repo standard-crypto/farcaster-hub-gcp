@@ -1,7 +1,3 @@
-provider "grafana" {
-  alias = "cloud"
-}
-
 resource "grafana_cloud_stack" "farcaster_stack" {
   provider    = grafana.cloud
   name        = var.grafana_cloud_stack_name
