@@ -1,16 +1,3 @@
-resource "kubernetes_secret" "eth-rpc-url" {
-  metadata {
-    name = "${var.name}-eth-rpc-url"
-  }
-  data = {
-    "url" = "PLACEHOLDER"
-  }
-  lifecycle {
-    // Do not overwrite with the PLACEHOLDER value
-    ignore_changes = all
-  }
-}
-
 resource "kubernetes_secret" "eth-mainnet-rpc-url" {
   metadata {
     name = "${var.name}-eth-mainnet-rpc-url"
