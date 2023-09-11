@@ -6,7 +6,7 @@ locals {
 
 resource "kubernetes_deployment" "graphite" {
   metadata {
-    name = "graphite"
+    name = local.app_name
   }
   spec {
     replicas = 1
@@ -65,6 +65,12 @@ resource "kubernetes_service" "graphite" {
       protocol    = "TCP"
       port        = local.graphite_web_port
       target_port = local.graphite_web_port
+    }
+    port {
+      name        = "statsd"
+      protocol    = "UDP"
+      port        = local.statsd_port
+      target_port = local.statsd_port
     }
     load_balancer_ip = google_compute_address.graphite_ip.address
   }
