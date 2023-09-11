@@ -31,3 +31,8 @@ variable "hubble-network" {
   type    = number
   default = 1 # mainnet
 }
+
+variable "hubble-operator-fid" {
+  type    = string
+  default = "69" # gavi
+}

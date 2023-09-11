@@ -65,15 +65,6 @@ resource "kubernetes_deployment" "farcaster" {
             value = "/dns/nemes.farcaster.xyz/tcp/2282"
           }
           env {
-            name = "ETH_GOERLI_RPC_URL"
-            value_from {
-              secret_key_ref {
-                name = kubernetes_secret.eth-rpc-url.metadata[0].name
-                key  = "url"
-              }
-            }
-          }
-          env {
             name = "ETH_MAINNET_RPC_URL"
             value_from {
               secret_key_ref {
@@ -101,7 +92,28 @@ resource "kubernetes_deployment" "farcaster" {
             }
           }
           command = ["yarn", "start"]
-          args    = ["--eth-rpc-url", "$(ETH_GOERLI_RPC_URL)", "--eth-mainnet-rpc-url", "$(ETH_MAINNET_RPC_URL)", "--l2-rpc-url", "$(OPTIMISM_L2_RPC_URL)", "--announce-server-name", "$(HUB_HOSTNAME)", "--announce-ip", "$(HUB_IP)", "--network", "$(HUB_NETWORK)", "--gossip-port", "2282", "--rpc-port", "2283", "--ip", "0.0.0.0", "--db-name", "farcaster"]
+          args = [
+            "--eth-mainnet-rpc-url",
+            "$(ETH_MAINNET_RPC_URL)",
+            "--l2-rpc-url",
+            "$(OPTIMISM_L2_RPC_URL)",
+            "--announce-server-name",
+            "$(HUB_HOSTNAME)",
+            "--announce-ip",
+            "$(HUB_IP)",
+            "--network",
+            "$(HUB_NETWORK)",
+            "--gossip-port",
+            "2282",
+            "--rpc-port",
+            "2283",
+            "--ip",
+            "0.0.0.0",
+            "--db-name",
+            "farcaster",
+            "--hub-operator-fid",
+            var.hubble-operator-fid
+          ]
         }
         volume {
           name = var.name
