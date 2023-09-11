@@ -19,3 +19,5 @@ provider "kubernetes" {
 provider "grafana" {
   alias = "cloud"
 }
+
+provider "github" {}

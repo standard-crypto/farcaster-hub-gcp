@@ -12,6 +12,10 @@ terraform {
       source  = "grafana/grafana"
       version = "1.40.1"
     }
+    github = {
+      source  = "integrations/github"
+      version = "~> 5.0"
+    }
   }
 
   backend "remote" {
