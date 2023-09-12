@@ -36,3 +36,13 @@ variable "hubble-operator-fid" {
   type    = string
   default = "69" # gavi
 }
+
+variable "grafana_cloud_stack_name" {
+  type    = string
+  default = "scfarcasterhub"
+}
+
+variable "grafana_cloud_org" {
+  type    = string
+  default = "standardcrypto"
+}

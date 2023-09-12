@@ -49,3 +49,9 @@ resource "kubernetes_secret" "grafana-api-key" {
     ignore_changes = all
   }
 }
+
+data "kubernetes_secret" "grafana-api-key" {
+  metadata {
+    name = kubernetes_secret.grafana-api-key.metadata[0].name
+  }
+}

@@ -8,6 +8,14 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "~> 2.0"
     }
+    grafana = {
+      source  = "grafana/grafana"
+      version = "1.40.1"
+    }
+    github = {
+      source  = "integrations/github"
+      version = "~> 5.0"
+    }
   }
 
   backend "remote" {
