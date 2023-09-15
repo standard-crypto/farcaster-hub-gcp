@@ -46,3 +46,8 @@ variable "grafana_cloud_org" {
   type    = string
   default = "standardcrypto"
 }
+
+variable "grafana_cloud_api_key" {
+  type        = string
+  description = "Grafana API Key"
+}
