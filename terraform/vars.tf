@@ -50,4 +50,5 @@ variable "grafana_cloud_org" {
 variable "grafana_cloud_api_key" {
   type        = string
   description = "Grafana API Key"
+  default     = ""
 }

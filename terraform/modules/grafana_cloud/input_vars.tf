@@ -11,4 +11,5 @@ variable "graphite_url" {
 variable "grafana_cloud_api_key" {
   type        = string
   description = "Grafana API Key"
+  default     = ""
 }
