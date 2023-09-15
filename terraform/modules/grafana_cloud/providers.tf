@@ -14,5 +14,5 @@ provider "grafana" {
   alias = "farcaster_stack"
 
   url  = grafana_cloud_stack.farcaster_stack.url
-  auth = var.grafana_cloud_api_key
+  auth = var.grafana_key
 }

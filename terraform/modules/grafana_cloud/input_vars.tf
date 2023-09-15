@@ -8,7 +8,7 @@ variable "graphite_url" {
   description = "URL of the hub's graphite instance"
 }
 
-variable "grafana_cloud_api_key" {
+variable "grafana_key" {
   type        = string
   description = "Grafana API Key"
   default     = ""
