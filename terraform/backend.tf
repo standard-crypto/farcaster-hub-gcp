@@ -10,7 +10,7 @@ terraform {
     }
     grafana = {
       source  = "grafana/grafana"
-      version = "~> 1.43"
+      version = "~> 2.3"
     }
     github = {
       source  = "integrations/github"
