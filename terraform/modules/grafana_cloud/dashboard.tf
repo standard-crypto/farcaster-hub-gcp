@@ -6,6 +6,7 @@ data "github_repository_file" "grafana_dashboard_json" {
 }
 
 resource "grafana_dashboard" "default_hubble_dashboard" {
+  count    = 0
   provider = grafana.farcaster_stack
 
   config_json = data.github_repository_file.grafana_dashboard_json.content
