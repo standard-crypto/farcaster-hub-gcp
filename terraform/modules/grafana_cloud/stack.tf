@@ -15,12 +15,10 @@ resource "grafana_cloud_stack_service_account" "cloud_sa" {
   is_disabled = false
 }
 
-/*
 resource "grafana_cloud_stack_service_account_token" "cloud_sa" {
-  provider   = grafana.farcaster_stack
+  provider   = grafana.cloud
   stack_slug = grafana_cloud_stack.farcaster_stack.slug
 
   name               = "Terraform service account key"
   service_account_id = grafana_cloud_stack_service_account.cloud_sa.id
 }
-*/

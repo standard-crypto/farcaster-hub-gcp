@@ -46,7 +46,3 @@ variable "grafana_cloud_org" {
   type    = string
   default = "standardcrypto"
 }
-
-variable "grafana_cloud_stack_service_account_token" {
-  description = "Token for Grafana Cloud Stack service account"
-}
