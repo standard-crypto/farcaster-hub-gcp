@@ -16,7 +16,7 @@ resource "grafana_cloud_stack_service_account" "cloud_sa" {
 }
 
 resource "grafana_cloud_stack_service_account_token" "cloud_sa" {
-  provider   = grafana.cloud
+  provider   = grafana.farcaster_stack
   stack_slug = grafana_cloud_stack.farcaster_stack.slug
 
   name               = "Terraform service account key"
