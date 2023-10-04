@@ -1,7 +1,7 @@
 resource "grafana_cloud_stack" "farcaster_stack" {
   provider    = grafana.cloud
   name        = var.grafana_cloud_stack_name
-  slug        = "scfarcasterhub"
+  slug        = var.grafana_cloud_stack_name
   description = "Farcaster Hub Metrics"
   region_slug = "us"
 }
