@@ -28,7 +28,7 @@ resource "kubernetes_deployment" "farcaster" {
           run_as_user = "1000"
         }
         container {
-          image = "farcasterxyz/hubble:1.6.2"
+          image = "farcasterxyz/hubble:1.6.4"
           name  = "${var.name}-image"
           volume_mount {
             name       = var.name
