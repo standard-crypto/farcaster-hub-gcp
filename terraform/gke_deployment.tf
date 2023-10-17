@@ -35,6 +35,11 @@ resource "kubernetes_deployment" "farcaster" {
             mount_path = "/home/node/app/apps/hubble/.rocks"
           }
           port {
+            name           = "hubble-http"
+            protocol       = "TCP"
+            container_port = 2281
+          }
+          port {
             name           = "hubble-gossip"
             protocol       = "TCP"
             container_port = 2282
@@ -98,6 +103,7 @@ resource "kubernetes_deployment" "farcaster" {
             "--announce-server-name", "$(HUB_HOSTNAME)",
             "--announce-ip", "$(HUB_IP)",
             "--network", "$(HUB_NETWORK)",
+            "--http-api-port", "2281",
             "--gossip-port", "2282",
             "--rpc-port", "2283",
             "--ip", "0.0.0.0",
@@ -132,6 +138,12 @@ resource "kubernetes_service" "farcaster" {
     type = "LoadBalancer"
     selector = {
       app = local.app-name
+    }
+    port {
+      name        = "hubble-gossip"
+      protocol    = "TCP"
+      port        = 2281
+      target_port = 2281
     }
     port {
       name        = "hubble-gossip"

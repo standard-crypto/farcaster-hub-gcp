@@ -51,7 +51,7 @@ resource "google_compute_firewall" "farcaster-hub-firewall" {
 
   allow {
     protocol = "tcp"
-    ports    = ["2282", "2283"]
+    ports    = ["2281", "2282", "2283"]
   }
 
   source_ranges = ["0.0.0.0/0"]
