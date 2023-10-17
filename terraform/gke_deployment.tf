@@ -140,7 +140,7 @@ resource "kubernetes_service" "farcaster" {
       app = local.app-name
     }
     port {
-      name        = "hubble-gossip"
+      name        = "hubble-http"
       protocol    = "TCP"
       port        = 2281
       target_port = 2281
