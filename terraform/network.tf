@@ -55,5 +55,5 @@ resource "google_compute_firewall" "farcaster-hub-firewall" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags   = [var.name]
+  target_tags   = [kubernetes_deployment.nginx.metadata[0].name]
 }

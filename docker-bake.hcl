@@ -16,3 +16,9 @@ target "grpc-exporter" {
     platforms = ["linux/amd64"]
     context = "./docker/grpc-exporter"
 }
+
+target "nginx" {
+    tags = ["us-west1-docker.pkg.dev/sc-farcaster/docker/nginx"]
+    platforms = ["linux/amd64"]
+    context = "./docker/nginx"
+}

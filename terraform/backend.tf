@@ -16,6 +16,10 @@ terraform {
       source  = "integrations/github"
       version = "~> 5.0"
     }
+    acme = {
+      source  = "vancluever/acme"
+      version = "2.17.0"
+    }
   }
 
   backend "remote" {

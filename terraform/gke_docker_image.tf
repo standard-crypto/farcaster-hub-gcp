@@ -3,4 +3,6 @@ locals {
   prometheus-image        = "${var.region}-docker.pkg.dev/${var.project-id}/${google_artifact_registry_repository.artifact-registry.repository_id}/prometheus@${local.prometheus-image_tag}"
   grpc-exporter-image_tag = "sha256:5289fa51f3b324f23adfc1fb675d6da20bc330f3d793d4b5b70f3e7b18aff4ba"
   grpc-exporter-image     = "${var.region}-docker.pkg.dev/${var.project-id}/${google_artifact_registry_repository.artifact-registry.repository_id}/grpc-exporter@${local.grpc-exporter-image_tag}"
+  nginx-image_tag         = "sha256:1736febded0c5fde9b369a6a058dd579d82b3937edb939f41a2862039952382b"
+  nginx-image             = "${var.region}-docker.pkg.dev/${var.project-id}/${google_artifact_registry_repository.artifact-registry.repository_id}/nginx@${local.nginx-image_tag}"
 }

@@ -28,7 +28,7 @@ resource "kubernetes_deployment" "farcaster" {
           run_as_user = "1000"
         }
         container {
-          image = "farcasterxyz/hubble:1.6.4"
+          image = "farcasterxyz/hubble:1.6.5"
           name  = "${var.name}-image"
           volume_mount {
             name       = var.name
@@ -157,6 +157,5 @@ resource "kubernetes_service" "farcaster" {
       port        = 2283
       target_port = 2283
     }
-    load_balancer_ip = google_compute_address.farcaster-hub-ip.address
   }
 }
