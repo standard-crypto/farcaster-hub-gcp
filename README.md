@@ -8,11 +8,10 @@ IAC used for managing the deployment of a Farcaster hub within a fresh GCP proje
 - Persistent disk mounted to the local rocksdb directory
 - Static IP and corresponding DNS record provisioned
 - Small, dedicated GKE cluster is provisioned within its own dedicated VPC
-- Kubernetes LoadBalancer service is provisioned along with corresponding firewall rules for inbound RPC and libp2p traffic
+- Nginx Reverse Proxy Kubernetes LoadBalancer service is provisioned along with corresponding firewall rules for inbound HTTP, RPC and libp2p traffic
 - A GCP Artifact Registry instance (optional, and private to the GCP project) is used for the custom prometheus infrastructure
-- Kubernetes Secrets are deployed to manage the Alchemy/Infura/etc node RPC URL and the libp2p peer identity used by the hub
-- Custom prometheus metrics for monitoring a hub's sync status
-  - Note: Integration with the prometheus and grafana stack provided by the Farcaster team is in progress
+- Kubernetes Secrets are deployed to manage the TLS certificate, Alchemy/Infura/etc node RPC URL and the libp2p peer identity used by the hub
+- Graphite and Grafana Stack provided by the Farcaster team monitoring hub status
 
 ## Copying This Deployment
 
@@ -23,6 +22,7 @@ Most things should work as-is for running in any GCP project.
 You may want to at least:
 
 - Change the DNS records created [by terraform](terraform/dns.tf)
+- Update the domain names for [Nginx](terraform/nginx.tf)
 - Edit the [backend](terraform/backend.tf) where terraform plans and runs (currently using hosted terraform.io)
 - Ensure terraform is configured with credentials to a GCP service account with appropriate scopes to create GCP resources (including new IAM roles)
 - Edit the per-GCP-project values in [vars.tf](terraform/vars.tf)
