@@ -1,0 +1,10 @@
+stream {
+    upstream gossip {
+        server ${NGINX_SERVICE_NAME}:2282;
+    }
+
+    server {
+        listen 2282;
+        proxy_pass gossip;
+    }
+}
