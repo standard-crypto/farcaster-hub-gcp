@@ -1,7 +1,3 @@
 FROM nginx:1.25.2
 
-COPY nginx.conf.template /etc/nginx/nginx.conf
-
-COPY run.sh /
-
-ENTRYPOINT [ "/run.sh" ]
+COPY default.conf.template /etc/nginx/templates/default.conf.template

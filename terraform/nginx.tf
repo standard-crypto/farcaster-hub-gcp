@@ -85,11 +85,11 @@ resource "kubernetes_deployment" "nginx" {
             container_port = 2283
           }
           env {
-            name  = "HUB_SERVICE"
+            name  = "NGINX_SERVICE_NAME"
             value = kubernetes_service.farcaster.metadata[0].name
           }
           env {
-            name  = "SERVER_NAME"
+            name  = "NGINX_SERVER_NAME"
             value = "hub.${local.common-domain}"
           }
         }
