@@ -1,3 +1,5 @@
-FROM nginx:1.25.2
+FROM nginx
 
-COPY default.conf.template /etc/nginx/templates/default.conf.template
+COPY default.conf.template stream.template /etc/nginx/templates/
+
+RUN echo 'include /etc/nginx/conf.d/stream;' >> /etc/nginx/nginx.conf
