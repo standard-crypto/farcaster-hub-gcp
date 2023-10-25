@@ -157,6 +157,5 @@ resource "kubernetes_service" "farcaster" {
       port        = 2283
       target_port = 2283
     }
-    load_balancer_ip = google_compute_address.farcaster-hub-ip.address
   }
 }

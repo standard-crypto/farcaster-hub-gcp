@@ -1,0 +1,57 @@
+user www-data;
+worker_processes  5;
+error_log  /dev/stdout debug;
+pid        /var/run/nginx.pid;
+worker_rlimit_nofile 8192;
+
+events {
+  worker_connections  1024;
+}
+
+http {
+    server {
+        listen 2281 ssl;
+
+        access_log  /var/log/nginx/http.access.log;
+        server_name ${NGINX_SERVER_NAME};
+
+        ssl_certificate /etc/certs/tls.crt;
+        ssl_certificate_key /etc/certs/tls.key;
+        ssl_protocols TLSv1.2 TLSv1.3;
+
+        location / {
+            proxy_pass http://${NGINX_SERVICE_NAME}:2281;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+    }
+
+    server {
+        listen 2283 ssl;
+        http2 on;
+
+        access_log  /var/log/nginx/rpc.access.log;
+        server_name ${NGINX_SERVER_NAME};
+
+        ssl_certificate /etc/certs/tls.crt;
+        ssl_certificate_key /etc/certs/tls.key;
+        ssl_protocols TLSv1.2 TLSv1.3;
+
+        location / {
+            grpc_pass grpc://${NGINX_SERVICE_NAME}:2283;
+        }
+    }
+}
+
+stream {
+    upstream gossip {
+        server ${NGINX_SERVICE_NAME}:2282;
+    }
+
+    server {
+        listen 2282;
+        proxy_pass gossip;
+    }
+}

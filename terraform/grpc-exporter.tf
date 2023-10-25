@@ -1,5 +1,5 @@
 locals {
-  grpc-exporter-app-name   = "grpc-exporter"
+  grpc-exporter-app-name = "grpc-exporter"
 }
 
 resource "kubernetes_deployment" "grpc-exporter" {

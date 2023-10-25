@@ -46,3 +46,8 @@ variable "grafana_cloud_org" {
   type    = string
   default = "standardcrypto"
 }
+
+variable "GOOGLE_CREDENTIALS" {
+  description = "Service account key used by terraform in this workspace"
+  type        = string
+}
