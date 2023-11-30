@@ -49,8 +49,12 @@ jobs:
         sed -i "s/image = \"farcasterxyz\/hubble:.*\"/image = \"farcasterxyz\/hubble:${{ steps.latest_version.outputs.version }}\"/" terraform/gke_deployment.tf
         cat terraform/gke_deployment.tf
 
-    - name: Print Versions
+    - name: Commit And Push Changes
+      if: ${{ steps.latest_version.outputs.version != steps.current_version.outputs.version }}
       run: |
-        echo "current version: ${{ steps.current_version.outputs.version }}"
-        echo "latest version: ${{ steps.latest_version.outputs.version }}"
-
+        git status
+        git add terraform/gke_deployment.tf
+        git status
+        git commit -m "Update Hubble version to ${{ steps.latest_version.outputs.version }}"
+        git status
+        git push
