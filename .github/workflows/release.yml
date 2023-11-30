@@ -23,7 +23,8 @@ jobs:
           # Strip away the version to get only "X.Y.Z" and set it in the output variable
           version=$(echo $latest_release | sed 's/@farcaster\/hubble@//')
           echo "version: $version"
-          echo "::set-output name=latest_version::$version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
         else
           echo "Invalid release format: $latest_release"
           exit 1
@@ -33,4 +34,4 @@ jobs:
 
     - name: Print Version
       run: |
-        echo "Latest version: ${{ steps.latest_release.outputs.latest_version }}"
+        echo "version: ${{ steps.latest_release.outputs.version }}"
