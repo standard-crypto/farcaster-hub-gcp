@@ -52,9 +52,8 @@ jobs:
     - name: Commit And Push Changes
       if: ${{ steps.latest_version.outputs.version != steps.current_version.outputs.version }}
       run: |
-        git status
+        git config --global user.email "93568025+piratekev@users.noreply.github.com"
+        git config --global user.name "Kevin Ayling"
         git add terraform/gke_deployment.tf
-        git status
         git commit -m "Update Hubble version to ${{ steps.latest_version.outputs.version }}"
-        git status
         git push
