@@ -19,9 +19,9 @@ jobs:
         latest_release=$(curl -s https://api.github.com/repos/farcasterxyz/hub-monorepo/releases/latest | jq -r '.tag_name')
 
         # Verify that the release starts with "@farcaster/hubble"
-        if [[ $latest_release == "@farcaster/hubble"* ]]; then
+        if [[ $latest_release == "@farcaster/hubble@"* ]]; then
           # Strip away the version to get only "X.Y.Z" and set it in the output variable
-          version=$(echo $latest_release | sed 's/@farcaster\/hubble//')
+          version=$(echo $latest_release | sed 's/@farcaster\/hubble@//')
           echo "version: $version"
           echo "::set-output name=latest_version::$version"
         else
