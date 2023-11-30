@@ -22,7 +22,7 @@ jobs:
         if [[ $latest_release == "@farcaster/hubble@"* ]]; then
           # Strip away the version to get only "X.Y.Z" and set it in the output variable
           version=$(echo $latest_release | sed 's/@farcaster\/hubble@//')
-          echo "version: $version"
+          echo "latest version from releases: $version"
           echo "version=$version" >> "$GITHUB_OUTPUT"
 
         else
