@@ -1,0 +1,37 @@
+name: Daily Trigger
+
+on:
+  schedule:
+    - cron: '0 18 * * *' # Triggers at 6pm UTC (10 AM PST) every day
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  trigger-job:
+    runs-on: ubuntu-latest
+
+    steps:
+    # - name: Checkout repository
+    #   uses: actions/checkout@v2
+
+    - name: Fetch latest release
+      id: latest_release
+      run: |
+        latest_release=$(curl -s https://api.github.com/repos/farcasterxyz/hub-monorepo/releases/latest | jq -r '.tag_name')
+
+        # Verify that the release starts with "@farcaster/hubble"
+        if [[ $latest_release == "@farcaster/hubble"* ]]; then
+          # Strip away the version to get only "X.Y.Z" and set it in the output variable
+          version=$(echo $latest_release | sed 's/@farcaster\/hubble//')
+          version=$(echo $version | tr -d '[:punct:]' | tr -d '[:space:]')
+          echo "Stripped version: $version"
+          echo "::set-output name=latest_version::$version"
+        else
+          echo "Invalid release format: $latest_release"
+          exit 1
+        fi
+      shell: bash
+
+
+    - name: Print Version
+      run: |
+        echo "Latest version: ${{ steps.latest_release.outputs.latest_version }}"
