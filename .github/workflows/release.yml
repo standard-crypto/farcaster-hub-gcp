@@ -22,8 +22,7 @@ jobs:
         if [[ $latest_release == "@farcaster/hubble"* ]]; then
           # Strip away the version to get only "X.Y.Z" and set it in the output variable
           version=$(echo $latest_release | sed 's/@farcaster\/hubble//')
-          version=$(echo $version | tr -d '[:punct:]' | tr -d '[:space:]')
-          echo "Stripped version: $version"
+          echo "version: $version"
           echo "::set-output name=latest_version::$version"
         else
           echo "Invalid release format: $latest_release"
