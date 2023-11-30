@@ -6,7 +6,7 @@ on:
   workflow_dispatch: # Manual trigger
 
 jobs:
-  trigger-job:
+  check-and-update-release:
     runs-on: ubuntu-latest
 
     steps:
@@ -41,6 +41,13 @@ jobs:
         echo "version=$current_version" >> "$GITHUB_OUTPUT"
       shell: bash
 
+
+    - name: Update Version in Terraform Config
+      if: ${{ steps.latest_version.outputs.version != steps.current_version.outputs.version }}
+      run: |
+        # Update the version in terraform/gke_deployment.tf file
+        sed -i "s/image = \"farcasterxyz\/hubble:.*\"/image = \"farcasterxyz\/hubble:$version\"/" terraform/gke_deployment.tf
+        cat terraform/gke_deployment.tf
 
     - name: Print Versions
       run: |
