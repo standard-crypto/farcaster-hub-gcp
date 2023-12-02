@@ -6,25 +6,25 @@ on:
   workflow_dispatch: # Manual trigger
 
 jobs:
-  trigger-job:
+  check-and-update-release:
     runs-on: ubuntu-latest
 
     steps:
-    # - name: Checkout repository
-    #   uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
     - name: Fetch latest release
-      id: latest_release
+      id: latest_version
       run: |
         latest_release=$(curl -s https://api.github.com/repos/farcasterxyz/hub-monorepo/releases/latest | jq -r '.tag_name')
 
         # Verify that the release starts with "@farcaster/hubble"
-        if [[ $latest_release == "@farcaster/hubble"* ]]; then
+        if [[ $latest_release == "@farcaster/hubble@"* ]]; then
           # Strip away the version to get only "X.Y.Z" and set it in the output variable
-          version=$(echo $latest_release | sed 's/@farcaster\/hubble//')
-          version=$(echo $version | tr -d '[:punct:]' | tr -d '[:space:]')
-          echo "Stripped version: $version"
-          echo "::set-output name=latest_version::$version"
+          version=$(echo $latest_release | sed 's/@farcaster\/hubble@//')
+          echo "latest version from releases: $version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
         else
           echo "Invalid release format: $latest_release"
           exit 1
@@ -32,6 +32,28 @@ jobs:
       shell: bash
 
 
-    - name: Print Version
+    - name: Get Current Version
+      id: current_version
       run: |
-        echo "Latest version: ${{ steps.latest_release.outputs.latest_version }}"
+        # Extract the current version from terraform/gke_deployment.tf file
+        current_version=$(grep -oP '(?<=image = "farcasterxyz/hubble:)[^"]*' terraform/gke_deployment.tf)
+        echo "Current version in terraform file: $current_version"
+        echo "version=$current_version" >> "$GITHUB_OUTPUT"
+      shell: bash
+
+
+    - name: Update Version in Terraform Config
+      if: ${{ steps.latest_version.outputs.version != steps.current_version.outputs.version }}
+      run: |
+        # Update the version in terraform/gke_deployment.tf file
+        sed -i "s/image = \"farcasterxyz\/hubble:.*\"/image = \"farcasterxyz\/hubble:${{ steps.latest_version.outputs.version }}\"/" terraform/gke_deployment.tf
+        cat terraform/gke_deployment.tf
+
+    - name: Commit And Push Changes
+      if: ${{ steps.latest_version.outputs.version != steps.current_version.outputs.version }}
+      run: |
+        git config --global user.email "93568025+piratekev@users.noreply.github.com"
+        git config --global user.name "Kevin Ayling"
+        git add terraform/gke_deployment.tf
+        git commit -m "Update Hubble version to ${{ steps.latest_version.outputs.version }}"
+        git push
