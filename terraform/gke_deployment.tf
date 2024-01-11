@@ -24,12 +24,15 @@ resource "kubernetes_deployment" "farcaster" {
       }
       spec {
         security_context {
-          fs_group    = "1000" # user 'node'
-          run_as_user = "1000"
+          fs_group = "1000" # user 'node'
         }
         container {
-          image = "farcasterxyz/hubble:1.9.1"
-          name  = "${var.name}-image"
+          image = "farcasterxyz/hubble:1.9.2"
+          name  = "${var.name}-container"
+          security_context {
+            allow_privilege_escalation = false
+            run_as_user                = "1000"
+          }
           volume_mount {
             name       = var.name
             mount_path = "/home/node/app/apps/hubble/.rocks"
