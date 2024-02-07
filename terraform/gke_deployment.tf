@@ -33,6 +33,12 @@ resource "kubernetes_deployment" "farcaster" {
             allow_privilege_escalation = false
             run_as_user                = "1000"
           }
+          resources {
+            requests = {
+              cpu    = "4"
+              memory = "16Gi"
+            }
+          }
           volume_mount {
             name       = var.name
             mount_path = "/home/node/app/apps/hubble/.rocks"

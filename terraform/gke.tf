@@ -20,7 +20,7 @@ module "gke" {
       machine_type    = "e2-standard-4"
       node_locations  = var.zone
       min_count       = 1
-      max_count       = 1
+      max_count       = 2
       local_ssd_count = 0
       spot            = false
       disk_size_gb    = 30
