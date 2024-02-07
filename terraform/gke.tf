@@ -1,25 +1,26 @@
 data "google_client_config" "default" {}
 
 module "gke" {
-  source                 = "terraform-google-modules/kubernetes-engine/google"
-  version                = "27.0.0"
-  project_id             = var.project-id
-  name                   = "${var.name}-cluster"
-  regional               = true
-  region                 = var.region
-  network                = module.gcp-network.network_name
-  subnetwork             = local.subnet_names[index(module.gcp-network.subnets_names, local.subnet-name)]
-  ip_range_pods          = local.ip-range-pods-name
-  ip_range_services      = local.ip-range-services-name
-  release_channel        = "REGULAR"
-  maintenance_recurrence = "FREQ=DAILY"
+  source                          = "terraform-google-modules/kubernetes-engine/google"
+  version                         = "30.0.0"
+  project_id                      = var.project-id
+  name                            = "${var.name}-cluster"
+  regional                        = true
+  region                          = var.region
+  network                         = module.gcp-network.network_name
+  subnetwork                      = local.subnet_names[index(module.gcp-network.subnets_names, local.subnet-name)]
+  ip_range_pods                   = local.ip-range-pods-name
+  ip_range_services               = local.ip-range-services-name
+  release_channel                 = "REGULAR"
+  maintenance_recurrence          = "FREQ=DAILY"
+  enable_vertical_pod_autoscaling = true
 
   node_pools = [
     {
       name            = "${var.name}-node-pool"
       machine_type    = "e2-standard-4"
       node_locations  = var.zone
-      min_count       = 1
+      min_count       = 2
       max_count       = 2
       local_ssd_count = 0
       spot            = false

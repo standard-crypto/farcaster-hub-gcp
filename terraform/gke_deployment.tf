@@ -35,7 +35,6 @@ resource "kubernetes_deployment" "farcaster" {
           }
           resources {
             requests = {
-              cpu    = "2"
               memory = "12Gi"
             }
           }
