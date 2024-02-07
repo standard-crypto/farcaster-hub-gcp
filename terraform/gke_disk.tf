@@ -2,6 +2,7 @@ resource "google_compute_disk" "farcaster" {
   name = "farcaster-data"
   type = "pd-standard"
   zone = var.zone
+  snapshot = "farcaster-data-us-west1-b-20240204043417-mt8amg9l"
   labels = {
     "goog-gke-volume"           = ""
     "goog-k8s-cluster-location" = "us-west1"

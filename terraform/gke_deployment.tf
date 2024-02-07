@@ -35,8 +35,8 @@ resource "kubernetes_deployment" "farcaster" {
           }
           resources {
             requests = {
-              cpu    = "4"
-              memory = "16Gi"
+              cpu    = "2"
+              memory = "12Gi"
             }
           }
           volume_mount {
