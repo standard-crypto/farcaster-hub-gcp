@@ -167,3 +167,27 @@ resource "kubernetes_service" "farcaster" {
     }
   }
 }
+
+resource "kubernetes_manifest" "farcaster-vertical-autoscaler" {
+  manifest = {
+    apiVersion = "autoscaling.k8s.io/v1"
+    kind       = "VerticalPodAutoscaler"
+    metadata = {
+      name      = "${var.name}-vertical-autoscaler"
+      namespace = "Default"
+    }
+    spec = {
+      targetRef = {
+        apiVersion = "apps/v1"
+        kind       = "Deployment"
+        name       = kubernetes_deployment.farcaster.metadata[0].name
+      }
+      updatePolicy = {
+        # specifies that the Vertical Pod Autoscaler controller can delete a Pod, 
+        # adjust the CPU and memory requests, and then start a new Pod.
+        updateMode  = "Auto"
+        minReplicas = 1
+      }
+    }
+  }
+}
