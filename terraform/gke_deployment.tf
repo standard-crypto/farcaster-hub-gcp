@@ -188,6 +188,14 @@ resource "kubernetes_manifest" "farcaster-vertical-autoscaler" {
         updateMode  = "Auto"
         minReplicas = 1
       }
+      resourcePolicy = {
+        containerPolicies = [{
+          containerName = "${var.name}-container"
+          maxAllowed = {
+            memory = "12Gi"
+          }
+        }]
+      }
     }
   }
 }
