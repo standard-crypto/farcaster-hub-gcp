@@ -18,10 +18,10 @@ module "gke" {
   node_pools = [
     {
       name            = "${var.name}-node-pool"
-      machine_type    = "e2-standard-4"
+      machine_type    = "e2-highmem-4"
       node_locations  = var.zone
-      min_count       = 2
-      max_count       = 2
+      min_count       = 1
+      max_count       = 1
       local_ssd_count = 0
       spot            = false
       disk_size_gb    = 30
