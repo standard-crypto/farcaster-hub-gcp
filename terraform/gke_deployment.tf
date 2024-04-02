@@ -35,7 +35,7 @@ resource "kubernetes_deployment" "farcaster" {
           }
           resources {
             requests = {
-              memory = "12Gi"
+              memory = "32Gi"
             }
           }
           volume_mount {
@@ -192,7 +192,7 @@ resource "kubernetes_manifest" "farcaster-vertical-autoscaler" {
         containerPolicies = [{
           containerName = "${var.name}-container"
           maxAllowed = {
-            memory = "12Gi"
+            memory = "56Gi"
           }
         }]
       }
