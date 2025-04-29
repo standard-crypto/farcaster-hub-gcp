@@ -27,7 +27,7 @@ resource "kubernetes_deployment" "farcaster" {
           fs_group = "1000" # user 'node'
         }
         container {
-          image = "farcasterxyz/hubble:1.19.2"
+          image = "farcasterxyz/hubble:1.19.3"
           name  = "${var.name}-container"
           security_context {
             allow_privilege_escalation = false
