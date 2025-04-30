@@ -1,8 +1,8 @@
 name: Fetch Latest Release
 
 on:
-  schedule:
-    - cron: '0 18 * * *' # Triggers at 6pm UTC (10 AM PST) every day
+  # schedule:
+    # - cron: '0 18 * * *' # Triggers at 6pm UTC (10 AM PST) every day
   workflow_dispatch: # Manual trigger
 
 jobs:
